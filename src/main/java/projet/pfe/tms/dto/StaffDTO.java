@@ -17,5 +17,6 @@ public class StaffDTO {
     private String emailSignature;
     private boolean admin;
     private RoleDTO roleDto;
+    private String newPassKey;
 }
 

@@ -21,5 +21,8 @@ public interface StaffService {
 	Staff loadUserByEmail(String email);
 
 	Staff loadUserById(Long id);
+	Staff setNewPassKey(String email ,String newPassKey);
+	Staff changePassword(String email ,String newPassKey);
+	boolean doesUserExistByEmail(String email);
 
 }

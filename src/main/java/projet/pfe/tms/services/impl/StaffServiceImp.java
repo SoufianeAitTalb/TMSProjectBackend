@@ -88,16 +88,16 @@ public class StaffServiceImp implements StaffService {
         user.setEmail(staffDto.getEmail());
         user.setPhoneNumber(staffDto.getPhoneNumber());
         user.setEmailSignature(staffDto.getEmailSignature());
+        user.setNewPassKey(staffDto.getNewPassKey());
         if(staffDto.getPassword() != null)
             user.setPassword(passwordEncoder.encode(staffDto.getPassword()));
         user.setAdmin(staffDto.isAdmin());
 
         Role role = roleRepo.findByRoleName("ADMIN");
 
-        if(!staffDto.isAdmin()){
+        if(!staffDto.isAdmin())  {
             role = this.roleService.updateRole(staffDto.getRoleDto().getRoleId(), staffDto.getRoleDto());
         }
-
         user.setRole(role);
         return userRepo.save(user);
     }
@@ -106,6 +106,26 @@ public class StaffServiceImp implements StaffService {
     public void deleteStaff(Long id){
         userRepo.deleteById(id);
     }
+
+    public Staff setNewPassKey(String email,String newPassKey){
+        Staff user=this.loadUserByEmail(email);
+        user.setNewPassKey(newPassKey);
+        return userRepo.save(user);
+
+    }
+    public Staff changePassword(String email,String password){
+        Staff user=this.loadUserByEmail(email);
+        user.setPassword(password);
+        return userRepo.save(user);
+
+    }
+
+    @Override
+    public boolean doesUserExistByEmail(String email){
+        return userRepo.existsByEmail(email);
+
+    }
+
 
 
 }
